@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3: Tipos de Rúbricas - Cuadro Comparativo</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --analytical-color: #3498db;
+            --holistic-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 1rem 0;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .comparative-table-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .category {
+            background-color: var(--light-color);
+            font-weight: bold;
+            width: 20%;
+        }
+        
+        .analytical-header {
+            background-color: var(--analytical-color);
+            width: 40%;
+        }
+        
+        .holistic-header {
+            background-color: var(--holistic-color);
+            width: 40%;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-check {
+            background-color: var(--success-color);
+        }
+        
+        .btn-check:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-reset {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-reset:hover {
+            background-color: #c0392b;
+        }
+        
+        .answer-key {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .answer-key.active {
+            display: block;
+        }
+        
+        .correct-answer {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .comparison-summary {
+            background-color: #f0f8ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .type-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .type-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .analytical-box, .holistic-box {
+            padding: 1.5rem;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        .analytical-box {
+            background-color: var(--analytical-color);
+        }
+        
+        .holistic-box {
+            background-color: var(--holistic-color);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+        
+        .buttons-container {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        
+        .feedback {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 4px solid var(--success-color);
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid var(--accent-color);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Módulo 3: Tipos de Rúbricas - Analítica u Holística</h1>
+            <p>Actividad: Cuadro Comparativo de Rúbricas Analíticas y Holísticas</p>
+        </header>
+        
+        <section class="intro">
+            <h2>Objetivo del Módulo</h2>
+            <p>Comparar los diferentes tipos de rúbricas para determinar su uso más adecuado según el propósito evaluativo.</p>
+            <p><strong>Resultado de aprendizaje:</strong> Diferencia entre una rúbrica analítica y una holística, justificando cuándo es pedagógicamente más pertinente usar cada una.</p>
+        </section>
+        
+        <section class="instructions">
+            <h2>Instrucciones de la Actividad</h2>
+            <p>Completa el siguiente cuadro comparativo resumiendo las ventajas, desventajas y uso ideal de las rúbricas analíticas y holísticas. Utiliza tus propias palabras basándote en los contenidos del módulo.</p>
+            <p>Una vez que hayas completado el cuadro, puedes verificar tus respuestas con la clave proporcionada.</p>
+        </section>
+        
+        <div class="content">
+            <section class="comparative-table-container">
+                <h2>Cuadro Comparativo: Rúbricas Analíticas vs. Holísticas</h2>
+                
+                <table>
+                    <tr>
+                        <th class="category">Categoría</th>
+                        <th class="analytical-header">Rúbrica Analítica</th>
+                        <th class="holistic-header">Rúbrica Holística</th>
+                    </tr>
+                    <tr>
+                        <td class="category">Definición</td>
+                        <td>
+                            <textarea id="def-analitica" placeholder="Describe qué es una rúbrica analítica..."></textarea>
+                            <div class="feedback" id="feedback-def-analitica"></div>
+                        </td>
+                        <td>
+                            <textarea id="def-holistica" placeholder="Describe qué es una rúbrica holística..."></textarea>
+                            <div class="feedback" id="feedback-def-holistica"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Ventajas</td>
+                        <td>
+                            <textarea id="ventajas-analitica" placeholder="Enumera las ventajas de las rúbricas analíticas..."></textarea>
+                            <div class="feedback" id="feedback-ventajas-analitica"></div>
+                        </td>
+                        <td>
+                            <textarea id="ventajas-holistica" placeholder="Enumera las ventajas de las rúbricas holísticas..."></textarea>
+                            <div class="feedback" id="feedback-ventajas-holistica"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Desventajas</td>
+                        <td>
+                            <textarea id="desventajas-analitica" placeholder="Enumera las desventajas de las rúbricas analíticas..."></textarea>
+                            <div class="feedback" id="feedback-desventajas-analitica"></div>
+                        </td>
+                        <td>
+                            <textarea id="desventajas-holistica" placeholder="Enumera las desventajas de las rúbricas holísticas..."></textarea>
+                            <div class="feedback" id="feedback-desventajas-holistica"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Uso Ideal</td>
+                        <td>
+                            <textarea id="uso-analitica" placeholder="Describe cuándo es más apropiado usar rúbricas analíticas..."></textarea>
+                            <div class="feedback" id="feedback-uso-analitica"></div>
+                        </td>
+                        <td>
+                            <textarea id="uso-holistica" placeholder="Describe cuándo es más apropiado usar rúbricas holísticas..."></textarea>
+                            <div class="feedback" id="feedback-uso-holistica"></div>
+                        </td>
+                    </tr>
+                </table>
+                
+                <div class="buttons-container">
+                    <button class="btn btn-check" id="check-answers">Verificar mis respuestas</button>
+                    <button class="btn" id="show-answer-key">Mostrar clave de respuestas</button>
+                    <button class="btn btn-reset" id="reset-answers">Limpiar respuestas</button>
+                </div>
+            </section>
+            
+            <section class="answer-key" id="answer-key">
+                <h2>Clave de Respuestas</h2>
+                <p>A continuación se presenta la clave de respuestas para el cuadro comparativo. Compara tus respuestas con esta clave para verificar tu comprensión.</p>
+                
+                <table>
+                    <tr>
+                        <th class="category">Categoría</th>
+                        <th class="analytical-header">Rúbrica Analítica</th>
+                        <th class="holistic-header">Rúbrica Holística</th>
+                    </tr>
+                    <tr>
+                        <td class="category">Definición</td>
+                        <td>
+                            <div class="correct-answer">
+                                <p>Evaluación por componentes separados. Divide el desempeño en criterios específicos que se evalúan individualmente, proporcionando retroalimentación detallada sobre cada aspecto.</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="correct-answer">
+                                <p>Evaluación global del desempeño. Considera el trabajo como un todo, asignando una puntuación general basada en la impresión global de la calidad.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Ventajas</td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Proporciona retroalimentación específica y detallada</li>
+                                    <li>Facilita la identificación de fortalezas y debilidades específicas</li>
+                                    <li>Mayor transparencia en los criterios de evaluación</li>
+                                    <li>Útil para evaluaciones formativas</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Evaluación más rápida y eficiente</li>
+                                    <li>Adecuada para evaluar tareas complejas e integradoras</li>
+                                    <li>Permite una visión global del desempeño</li>
+                                    <li>Útil para evaluaciones sumativas o de grandes volúmenes</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Desventajas</td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Puede ser más lenta de aplicar</li>
+                                    <li>Riesgo de fragmentar la evaluación perdiendo la visión global</li>
+                                    <li>Puede resultar demasiado detallada para algunas tareas</li>
+                                    <li>Mayor tiempo de diseño y elaboración</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Proporciona menos retroalimentación específica</li>
+                                    <li>Puede ser más subjetiva si no está bien diseñada</li>
+                                    <li>Menos útil para guiar mejoras específicas</li>
+                                    <li>Dificulta identificar áreas problemáticas concretas</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category">Uso Ideal</td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Cuando se necesita proporcionar retroalimentación detallada para mejorar</li>
+                                    <li>Para evaluar procesos o productos con componentes claramente diferenciados</li>
+                                    <li>En evaluaciones formativas donde el aprendizaje está en desarrollo</li>
+                                    <li>Cuando los estudiantes necesitan guía específica para mejorar</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="correct-answer">
+                                <ul>
+                                    <li>Cuando se prioriza la evaluación rápida de grandes volúmenes de trabajo</li>
+                                    <li>Para evaluar tareas integradoras donde el todo es más importante que las partes</li>
+                                    <li>En evaluaciones sumativas donde interesa la calidad global</li>
+                                    <li>Cuando se busca una impresión general del desempeño</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="comparison-summary">
+                <h2>Resumen Comparativo</h2>
+                <p>La elección entre una rúbrica analítica y una holística depende del propósito evaluativo, el tipo de tarea, el momento de la evaluación y las necesidades de retroalimentación.</p>
+                
+                <div class="type-comparison">
+                    <div class="analytical-box">
+                        <h3>Rúbrica Analítica</h3>
+                        <p><strong>Cuándo usar:</strong> Evaluaciones formativas, tareas con componentes claros, cuando se necesita retroalimentación detallada.</p>
+                        <p><strong>Ventaja principal:</strong> Proporciona retroalimentación específica para mejorar.</p>
+                    </div>
+                    
+                    <div class="holistic-box">
+                        <h3>Rúbrica Holística</h3>
+                        <p><strong>Cuándo usar:</strong> Evaluaciones sumativas, tareas integradoras, cuando se prioriza la eficiencia.</p>
+                        <p><strong>Ventaja principal:</strong> Evaluación rápida con visión global del desempeño.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Curso Virtual: Rúbricas Evaluativas para Profesores - Módulo 3: Tipos de Rúbricas</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar/ocultar clave de respuestas
+        document.getElementById('show-answer-key').addEventListener('click', function() {
+            const answerKey = document.getElementById('answer-key');
+            answerKey.classList.toggle('active');
+            
+            if (answerKey.classList.contains('active')) {
+                this.textContent = 'Ocultar clave de respuestas';
+            } else {
+                this.textContent = 'Mostrar clave de respuestas';
+            }
+        });
+        
+        // Limpiar respuestas
+        document.getElementById('reset-answers').addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que quieres limpiar todas tus respuestas?')) {
+                const textareas = document.querySelectorAll('textarea');
+                textareas.forEach(textarea => {
+                    textarea.value = '';
+                });
+                
+                // Ocultar feedback
+                const feedbacks = document.querySelectorAll('.feedback');
+                feedbacks.forEach(feedback => {
+                    feedback.classList.remove('correct', 'incorrect');
+                    feedback.style.display = 'none';
+                });
+            }
+        });
+        
+        // Verificar respuestas (simulación básica)
+        document.getElementById('check-answers').addEventListener('click', function() {
+            // Esta es una verificación básica que solo comprueba si hay texto
+            // En una implementación real, se podría hacer una comparación más sofisticada
+            
+            const textareas = document.querySelectorAll('textarea');
+            let allCompleted = true;
+            
+            textareas.forEach(textarea => {
+                const feedback = document.getElementById(`feedback-${textarea.id}`);
+                
+                if (textarea.value.trim() === '') {
+                    feedback.textContent = 'Por favor, completa este campo.';
+                    feedback.classList.remove('correct');
+                    feedback.classList.add('incorrect');
+                    feedback.style.display = 'block';
+                    allCompleted = false;
+                } else {
+                    feedback.textContent = '¡Respuesta completada! Compara con la clave para verificar.';
+                    feedback.classList.remove('incorrect');
+                    feedback.classList.add('correct');
+                    feedback.style.display = 'block';
+                }
+            });
+            
+            if (allCompleted) {
+                alert('¡Has completado todas las secciones del cuadro comparativo! Ahora compara tus respuestas con la clave para verificar tu comprensión.');
+            } else {
+                alert('Por favor, completa todas las secciones del cuadro antes de verificar.');
+            }
+        });
+        
+        // Guardar respuestas automáticamente (simulación con localStorage)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar respuestas guardadas si existen
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                const savedValue = localStorage.getItem(textarea.id);
+                if (savedValue) {
+                    textarea.value = savedValue;
+                }
+                
+                // Guardar automáticamente al cambiar
+                textarea.addEventListener('input', function() {
+                    localStorage.setItem(this.id, this.value);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
